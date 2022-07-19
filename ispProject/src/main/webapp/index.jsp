@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>MyMasjid: Event Management System UiTM Melaka</title>
+<title>MyMasjid: Event Management System UiTM </title>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <style>
 body {
@@ -36,14 +36,14 @@ a {
 	text-decoration: none;
 }
 </style>
+		
 </head>
 <body>
 
 
 	<h2>WELCOME TO MASJID UiTM JASIN MELAKA </h2>
 	<h1>MyMasjid: EVENT MANAGEMENT SYSTEM</h1>
-	<h2>YEAGERIST</h2>
-
+	<h2>TEAM YEAGERIST</h2>
 
 	<hr>
 	<a href="listEvent.jsp">
@@ -52,5 +52,40 @@ a {
 	<a href="addEvent.jsp">
 		<button>Add Event</button>
 	</a>
+	<br><br>
+	<p id="demo"></p>
+
+<script>
+	window.onload = function()
+	{
+		var request = new XMLHttpRequest();
+		request.open('GET', 'https://microsrvs.herokuapp.com/listevent', true);
+		request.onload = function()
+		{
+			var obj = JSON.parse(this.response);
+			var table = document.createElement("table");
+			for(var i=0; i<obj.length; i++)
+			{
+				var row = table.insertRow(i);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				var cell5 = row.insertCell(4);
+
+
+				cell1.innerHTML = obj[i].event_id;
+				cell2.innerHTML = obj[i].event_name;
+				cell3.innerHTML = obj[i].event_date;
+				cell4.innerHTML = obj[i].event_time;
+				cell5.innerHTML = obj[i].no_of_participants;
+
+			}
+			document.getElementById('demo').appendChild(table);
+		};
+		request.send();
+	}
+</script>
+	
 </body>
 </html>
